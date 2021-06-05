@@ -3,21 +3,21 @@ const CoinGecko = require('coingecko-api');
 const CoinGeckoClient = new CoinGecko();
 
 const coinGecko = {
-
+    // Consulta el precio de una cripto en la API de coingecko
     criptoPrice: async(cripto) => {
-        console.log("Entraste a cripto en criptoPrice");
-        console.log(cripto);
+
         let criptoToLowerCase = cripto.toString().toLowerCase();
 
-        console.log("Entraste a criptoPrice");
-        console.log(criptoToLowerCase);
-
-        let geckoData = await CoinGeckoClient.simple.price({
+    // realiza la consulta a la API
+        let geckoJson = await CoinGeckoClient.simple.price({
             ids: criptoToLowerCase,
             vs_currencies: 'usd',
         });
-        console.log(geckoData);
-        return geckoData.data;
+    // Almacena el dato del objeto recibido por la API, USD, en priceUsd
+        const priceValue = Object.values(geckoJson.data)[0];
+        const priceUsd = priceValue.usd;
+
+        return priceUsd;
     }
 }
 
